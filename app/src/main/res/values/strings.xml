@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Mushroomtify</string>
+    <string name="permission_dialog_title">Permission needed</string>
+    <string name="permission_dialog_message">Application need permission to get an mushroom image. Please provide permission to </string>
+    <string name="camera_permission_name">camera</string>
+    <string name="files_permission_name">files</string>
+    <string name="ok">OK</string>
 </resources>
