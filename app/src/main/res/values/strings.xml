@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">Mushroomtify</string>
+    <string name="take_picture_btn_text">Take a picture</string>
+    <string name="open_gallery_btn_text">Open gallery</string>
+    <string name="write_external_permission_name">write external files</string>
+    <string name="read_external_permission_name">read external files and camera</string>
+    <string name="permission_dialog_message">Application need a permission to work properly. Please provide permission to: </string>
     <string name="permission_dialog_title">Permission needed</string>
-    <string name="permission_dialog_message">Application need permission to get an mushroom image. Please provide permission to </string>
-    <string name="camera_permission_name">camera</string>
-    <string name="files_permission_name">files</string>
     <string name="ok">OK</string>
+    <string name="error">Error</string>
+    <string name="error_dialog_message">Something went wrong. Please try again</string>
+    <string name="filter_name">Filter name</string>
+    <string name="share_btn_text">Share</string>
+    <string-array name="filters_names">
+        <item>Original</item>
+        <item>Sepia</item>
+        <item>Invert</item>
+        <item>Sharpen</item>
+        <item>RedFilter</item>
+        <item>BlueFilter</item>
+        <item>GreenFilter</item>
+    </string-array>
 </resources>

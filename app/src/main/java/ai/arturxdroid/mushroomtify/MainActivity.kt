@@ -1,75 +1,193 @@
 package ai.arturxdroid.mushroomtify
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.io.IOException
+import java.net.URI
+import java.text.SimpleDateFormat
+import java.util.*
+const val EXTRA_IMAGE_URI = "EXTRA_IMAGE_URI"
 
 class MainActivity : AppCompatActivity() {
 
-    private val CAMERA_REQUEST_CODE = 200
-    private val FILES_REQUEST_CODE = 100
+    private val READ_PERMISSION_REQUEST_CODE = 100
+    private val CAMERA_PERMISSION_REQUEST_CODE = 200
+    private val CAMERA_IMAGE_REQUEST_CODE = 101
+    private val GALLERY_IMAGE_REQUEST_CODE = 201
+
+    private var cameraFilePath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initViews()
+        initUI()
     }
 
-    private fun initViews() {
-        takePictureImageButton.setOnClickListener {
-            handleCameraPermission()
-            takePicture()
-        }
-        
-        openGalleryImageButton.setOnClickListener{
-            handleFilesPermission()
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == READ_PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             openGallery()
-        }
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            takePicture()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK)
+            when (requestCode) {
+                CAMERA_IMAGE_REQUEST_CODE -> processCameraImage()
+                GALLERY_IMAGE_REQUEST_CODE -> processGalleryImage(data)
+            }
+        else
+            showErrorDialog()
+    }
+
+    private fun processCameraImage() {
+        val imageUri = Uri.parse(cameraFilePath)
+//        val intent = Intent(this, FiltersActivity::class.java)
+        intent.putExtra(EXTRA_IMAGE_URI, imageUri.toString())
+        startActivity(intent)
+    }
+
+    private fun processGalleryImage(data: Intent?) {
+        val imageUri = data?.data
+//        val intent = Intent(this, FiltersActivity::class.java)
+        intent.putExtra(EXTRA_IMAGE_URI, imageUri.toString())
+        startActivity(intent)
+    }
+
+    private fun initUI() {
+        take_picture_button.setOnClickListener { getPermissionAndTakePicture() }
+        open_gallery_button.setOnClickListener { getPermissionAndOpenGallery() }
+    }
+
+
+    private fun getPermissionAndTakePicture() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        )
+            getCameraPermission()
+        else
+            takePicture()
 
     }
 
     private fun takePicture() {
-        TODO("handle getting image")
+        try {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(
+                MediaStore.EXTRA_OUTPUT,
+                FileProvider.getUriForFile(
+                    this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    createImageFile()
+                )
+            )
+            startActivityForResult(intent, CAMERA_IMAGE_REQUEST_CODE)
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+
     }
 
-    private fun openGallery() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    private fun handleFilesPermission() {
+    private fun getPermissionAndOpenGallery() {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                showPermissionRationaleDialog(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-            requestOnePermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }    }
-
-    private fun handleCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                showPermissionRationaleDialog(Manifest.permission.CAMERA)
-            }
-            requestOnePermission(Manifest.permission.CAMERA)
+            getReadPermission()
+        } else {
+            openGallery()
         }
+
     }
 
-    private fun showPermissionRationaleDialog(permission: String) {
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        val mimeTypes = arrayOf("image/jpeg", "image/png")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+        startActivityForResult(intent, GALLERY_IMAGE_REQUEST_CODE)
+    }
 
-        val permissionName = when (permission) {
-            Manifest.permission.CAMERA -> getString(R.string.camera_permission_name)
-            else -> getString(R.string.files_permission_name)
+    private fun getReadPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE))
+            showRequestExplanationDialog(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+        else
+            requestPermission(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            )
+
+    }
+
+    private fun getCameraPermission() {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            showRequestExplanationDialog(
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                )
+            )
+        else
+            requestPermission(
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                )
+            )
+    }
+
+    private fun requestPermission(permissions: Array<String>) {
+        val requestCode =
+            if (permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE) CAMERA_PERMISSION_REQUEST_CODE else READ_PERMISSION_REQUEST_CODE
+        requestPermissions(permissions, requestCode)
+
+    }
+
+    private fun createImageFile(): File {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+
+        val storageDir = File(
+            Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM
+            ), "Camera"
+        )
+        val image = File.createTempFile(
+            imageFileName,
+            ".jpg",
+            storageDir
+        )
+
+        cameraFilePath = "file://" + image.absolutePath
+        return image
+    }
+
+    private fun showRequestExplanationDialog(permissions: Array<String>) {
+
+        val permissionName = when (permissions[0]) {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE -> getString(R.string.write_external_permission_name)
+            else -> getString(R.string.read_external_permission_name)
         }
 
         val dialogMessage = getString(R.string.permission_dialog_message)
@@ -81,14 +199,22 @@ class MainActivity : AppCompatActivity() {
                 R.string.ok
             ) { dialog, _ ->
                 dialog.dismiss()
-                requestOnePermission(permission)
+                requestPermission(permissions)
             }
             .create()
             .show()
     }
 
-    private fun requestOnePermission(permission: String) {
-        val requestCode = if (permission == Manifest.permission.CAMERA) CAMERA_REQUEST_CODE else FILES_REQUEST_CODE
-        requestPermissions(arrayOf(permission),requestCode)
+    private fun showErrorDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.error)
+            .setMessage(R.string.error_dialog_message)
+            .setNeutralButton(
+                R.string.ok
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }
