@@ -37,7 +37,7 @@ class Classifier(modelPath: String) {
 
     public fun predict(bitmap: Bitmap):String{
 
-        val tensor = preprocess(bitmap,224)
+        val tensor = preprocess(bitmap,256)
 
         val inputs = IValue.from(tensor)
         val outputs = model.forward(inputs).toTensor()

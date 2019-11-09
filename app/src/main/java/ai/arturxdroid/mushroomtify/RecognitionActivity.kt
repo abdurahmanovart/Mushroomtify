@@ -21,7 +21,7 @@ class RecognitionActivity : AppCompatActivity() {
         val uriString = intent.extras?.getString(EXTRA_IMAGE_URI)
         val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, Uri.parse(uriString))
         mushroom_recognition_image_view.setImageBitmap(imageBitmap)
-        classifier = Classifier(Utils.assetFilePath(this,"last_cnn.pt"))
+        classifier = Classifier(Utils.assetFilePath(this,"last_jit_model.pt"))
         recognized_name_text_view.text = classifier.predict(imageBitmap)
     }
 
