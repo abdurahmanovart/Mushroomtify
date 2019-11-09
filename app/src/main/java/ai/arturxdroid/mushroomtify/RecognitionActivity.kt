@@ -22,7 +22,8 @@ class RecognitionActivity : AppCompatActivity() {
         val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, Uri.parse(uriString))
         mushroom_recognition_image_view.setImageBitmap(imageBitmap)
         classifier = Classifier(Utils.assetFilePath(this,"last_jit_model.pt"))
-        recognized_name_text_view.text = classifier.predict(imageBitmap)
+        val text = classifier.predict(imageBitmap,true)+"\n\n"+classifier.predict(imageBitmap)
+        recognized_name_text_view.text = text
     }
 
 

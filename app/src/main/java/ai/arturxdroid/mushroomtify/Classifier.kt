@@ -8,13 +8,9 @@ import org.pytorch.torchvision.TensorImageUtils
 
 class Classifier(modelPath: String) {
 
-    lateinit var model: Module
+    var model = Module.load(modelPath)
     val mean = floatArrayOf(0.485f, 0.456f, 0.406f)
     val std = floatArrayOf(0.229f, 0.224f, 0.225f)
-
-    init {
-        model = Module.load(modelPath)
-    }
 
     public fun preprocess(bitmap: Bitmap, size: Int): Tensor =
         TensorImageUtils.bitmapToFloat32Tensor(
@@ -35,17 +31,33 @@ class Classifier(modelPath: String) {
         return maxIndex
     }
 
-    public fun predict(bitmap: Bitmap):String{
+    private fun fiveArgMax(array: FloatArray): String {
+        val copy = array.copyOf()
+        val sortedCopy = array.copyOf()
+        sortedCopy.sort()
+        val firstFives = sortedCopy.takeLast(5)
+        val firtsIndexes = IntArray(5)
+        var result = ""
+        for (i in firstFives.indices) {
+            firtsIndexes[i] = copy.indexOf(firstFives[i])
+            result += Constants.LABELS_LIST[firtsIndexes[i]] + ":" + firstFives[i]+"\n"
+        }
 
-        val tensor = preprocess(bitmap,256)
+        return result
+    }
+
+    public fun predict(bitmap: Bitmap, full_info: Boolean = false): String {
+
+        val tensor = preprocess(bitmap, 256)
 
         val inputs = IValue.from(tensor)
         val outputs = model.forward(inputs).toTensor()
         val scores = outputs.dataAsFloatArray
 
         val classIndex = argMax(scores)
-
-        return Constants.LABELS_LIST[classIndex]
+        if (!full_info)
+            return Constants.LABELS_LIST[classIndex]
+        return fiveArgMax(scores)
 
     }
 }
