@@ -61,14 +61,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun processCameraImage() {
         val imageUri = Uri.parse(cameraFilePath)
-//        val intent = Intent(this, FiltersActivity::class.java)
+        val intent = Intent(this, RecognitionActivity::class.java)
         intent.putExtra(EXTRA_IMAGE_URI, imageUri.toString())
         startActivity(intent)
     }
 
     private fun processGalleryImage(data: Intent?) {
         val imageUri = data?.data
-//        val intent = Intent(this, FiltersActivity::class.java)
+        val intent = Intent(this, RecognitionActivity::class.java)
         intent.putExtra(EXTRA_IMAGE_URI, imageUri.toString())
         startActivity(intent)
     }
