@@ -13,7 +13,7 @@ class Classifier(modelPath: String) {
     val mean = floatArrayOf(0.485f, 0.456f, 0.406f)
     val std = floatArrayOf(0.229f, 0.224f, 0.225f)
 
-    private fun preprocess(bitmap: Bitmap, size: Int): Tensor =
+    private fun preProcess(bitmap: Bitmap, size: Int): Tensor =
         TensorImageUtils.bitmapToFloat32Tensor(
             Bitmap.createScaledBitmap(bitmap, size, size, false), mean, std
         )
@@ -36,11 +36,11 @@ class Classifier(modelPath: String) {
         val sortedCopy = array.copyOf()
         sortedCopy.sort()
         val firstFives = sortedCopy.takeLast(5)
-        val firtsIndexes = IntArray(5)
+        val firstIndexes = IntArray(5)
         var result = ""
         for (i in firstFives.indices) {
-            firtsIndexes[i] = copy.indexOf(firstFives[i])
-            result += Constants.LABELS_LIST[firtsIndexes[i]] + ":" + firstFives[i] + "\n"
+            firstIndexes[i] = copy.indexOf(firstFives[i])
+            result += Constants.LABELS_LIST[firstIndexes[i]] + ":" + firstFives[i] + "\n"
         }
 
         return result
@@ -54,10 +54,10 @@ class Classifier(modelPath: String) {
         val bmp270 = bmpOrig.rotate(270f)
 
 
-        val tensorOrig = preprocess(bmpOrig, 256)
-        val tensor90 = preprocess(bmp90, 256)
-        val tensor180 = preprocess(bmp180, 256)
-        val tensor270 = preprocess(bmp270, 256)
+        val tensorOrig = preProcess(bmpOrig, 256)
+        val tensor90 = preProcess(bmp90, 256)
+        val tensor180 = preProcess(bmp180, 256)
+        val tensor270 = preProcess(bmp270, 256)
 
         val inputsOrig = IValue.from(tensorOrig)
         val outputOrig = model.forward(inputsOrig).toTensor()

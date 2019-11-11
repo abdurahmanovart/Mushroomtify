@@ -18,7 +18,6 @@ object Utils {
 
                 val outStream = FileOutputStream(file, false);
 
-
                 val buffer = ByteArray(4 * 1024)
                 var read: Int
                 while (true) {
@@ -29,7 +28,6 @@ object Utils {
                     outStream.write(buffer, 0, read)
                 }
                 outStream.flush()
-
 
             } catch (ex: Exception) {
 
