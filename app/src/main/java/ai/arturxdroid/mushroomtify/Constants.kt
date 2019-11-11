@@ -2,7 +2,7 @@ package ai.arturxdroid.mushroomtify
 
 object Constants {
 
-    public val LABELS_LIST = arrayListOf<String>(
+    val LABELS_LIST = arrayListOf(
         "amanita muscaria",
         "amanita pantherina",
         "amanita phalloides",
