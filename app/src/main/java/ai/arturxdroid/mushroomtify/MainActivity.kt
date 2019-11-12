@@ -1,6 +1,8 @@
 package ai.arturxdroid.mushroomtify
 
 import android.Manifest
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -25,13 +27,29 @@ class MainActivity : AppCompatActivity() {
     private val CAMERA_PERMISSION_REQUEST_CODE = 200
     private val CAMERA_IMAGE_REQUEST_CODE = 101
     private val GALLERY_IMAGE_REQUEST_CODE = 201
-
+    private val SHARED_PREFS = "shared_prefs"
+    private val SHARED_FIRST_LAUNCH = "shared_first_launch"
     private var cameraFilePath = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        showDisclaimer()
         initUI()
+    }
+
+    private fun showDisclaimer() {
+        val prefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+        if(prefs.getBoolean(SHARED_FIRST_LAUNCH,true)){
+            prefs.edit().putBoolean(SHARED_FIRST_LAUNCH,false).apply()
+            AlertDialog.Builder(this).setTitle(R.string.disclaimer_title)
+                .setMessage(R.string.disclaimer_message)
+                .setPositiveButton(R.string.ok
+                ) { dialog, _ -> dialog?.dismiss() }
+                .setCancelable(false)
+                .show()
+        }
+
     }
 
     override fun onRequestPermissionsResult(

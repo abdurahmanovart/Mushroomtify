@@ -11,6 +11,8 @@
     <string name="error_dialog_message">Something went wrong. Please try again</string>
     <string name="filter_name">Filter name</string>
     <string name="share_btn_text">Share</string>
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_message">Dont eat mushrooms, when you are not sure, if they are edible. This application only gives information, what mushrooms your pictures are similar to.</string>
     <string-array name="filters_names">
         <item>Original</item>
         <item>Sepia</item>
