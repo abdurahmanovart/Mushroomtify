@@ -16,15 +16,19 @@ object Utils {
 
             try {
 
-                val outStream = FileOutputStream(file, false);
+                val outStream = FileOutputStream(file, false)
 
                 val buffer = ByteArray(4 * 1024)
                 var read: Int
+
                 while (true) {
+
                     read = inpStream.read(buffer)
+
                     if (read == -1) {
                         break
                     }
+
                     outStream.write(buffer, 0, read)
                 }
                 outStream.flush()

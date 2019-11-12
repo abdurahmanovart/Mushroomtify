@@ -46,6 +46,16 @@ class Classifier(modelPath: String) {
         return result
     }
 
+    private fun fullArgMax(array: FloatArray):String{
+        val copy = array.copyOf()
+        var result = ""
+        for (i in copy.indices){
+            result+= Constants.LABELS_LIST[i] +":"+copy[i]+"\n"
+        }
+        return result
+
+    }
+
     fun predict(bitmap: Bitmap, full_info: Boolean = false): String {
 
         val bmpOrig = Bitmap.createScaledBitmap(bitmap, 256, 256, false)
@@ -61,11 +71,11 @@ class Classifier(modelPath: String) {
 
         val inputsOrig = IValue.from(tensorOrig)
         val outputOrig = model.forward(inputsOrig).toTensor()
-        val scrorOrig = outputOrig.dataAsFloatArray.asList()
+        val scorOrig = outputOrig.dataAsFloatArray.asList()
 
         val inputs90 = IValue.from(tensor90)
         val output90 = model.forward(inputs90).toTensor()
-        val scror90 = output90.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
+        val scor90 = output90.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
 
         val inputs180 = IValue.from(tensor180)
         val output180 = model.forward(inputs180).toTensor()
@@ -75,16 +85,15 @@ class Classifier(modelPath: String) {
         val output270 = model.forward(inputs270).toTensor()
         val scror270 = output270.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
 
-        var scores = scrorOrig.zip(scror90).map { (a, b) -> a + b }
+        var scores = scorOrig.zip(scor90).map { (a, b) -> a + b }
         scores = scores.zip(scror180).map { (a, b) -> a + b }
         scores = scores.zip(scror270).map { (a, b) -> a + b }
-        val finalScores = scores.toFloatArray()
-
+        val finalScores = scores.map { it/4f }.toFloatArray()
 
         val classIndex = argMax(finalScores)
         if (!full_info)
             return Constants.LABELS_LIST[classIndex]
-        return fiveArgMax(finalScores)
+        return fullArgMax(finalScores)
 
     }
 
