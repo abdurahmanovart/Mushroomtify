@@ -14,16 +14,21 @@ import kotlinx.coroutines.*
 class RecognitionActivity : AppCompatActivity() {
 
     private lateinit var classifier: Classifier
-    val coroutineScope = CoroutineScope(Job())
+    val job = Job()
+    val coroutineScope = CoroutineScope(job)
     val currentRecognizedText: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
-    private lateinit var viewModel: RecognitionViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recognition)
         initUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        coroutineScope.cancel()
     }
 
     private fun initUI() {
@@ -59,3 +64,4 @@ class RecognitionActivity : AppCompatActivity() {
         return text
     }
 }
+

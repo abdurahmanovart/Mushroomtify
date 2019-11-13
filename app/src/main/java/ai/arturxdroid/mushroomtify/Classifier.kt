@@ -19,7 +19,7 @@ class Classifier(modelPath: String) {
         )
 
     private fun argMax(array: FloatArray): Int {
-        var maxIndex = -1
+        var maxIndex = 0
         var maxValue = Float.MIN_VALUE
 
         for (i in array.indices) {
