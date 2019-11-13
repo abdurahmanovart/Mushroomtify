@@ -20,7 +20,7 @@ class Classifier(modelPath: String) {
 
     private fun argMax(array: FloatArray): Int {
         var maxIndex = -1
-        var maxValue = 0f
+        var maxValue = Float.MIN_VALUE
 
         for (i in array.indices) {
             if (array[i] > maxValue) {
@@ -31,7 +31,7 @@ class Classifier(modelPath: String) {
         return maxIndex
     }
 
-    private fun fiveArgMax(array: FloatArray): String {
+    private fun fourArgMax(array: FloatArray): String {
         val copy = array.copyOf()
         val sortedCopy = array.copyOf()
         sortedCopy.sort()
