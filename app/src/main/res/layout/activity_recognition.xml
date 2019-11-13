@@ -7,23 +7,16 @@
     android:orientation="vertical"
     tools:context=".RecognitionActivity">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/mushroom_recognition_image_view"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_gravity="center"
-        android:layout_marginTop="16dp">
-
-        <ImageView
-            android:id="@+id/mushroom_recognition_image_view"
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/recognized_name_text_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </com.google.android.material.card.MaterialCardView>
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/recognized_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/progress_layout"
