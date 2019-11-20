@@ -56,7 +56,7 @@ class Classifier(modelPath: String) {
 
     }
 
-    fun predict(bitmap: Bitmap, full_info: Boolean = false): String {
+    fun predict(bitmap: Bitmap, full_info: Boolean = false): ArrayList<String> {
 
         val bmpOrig = Bitmap.createScaledBitmap(bitmap, 256, 256, false)
         val bmp90 = bmpOrig.rotate(90f)
@@ -75,15 +75,15 @@ class Classifier(modelPath: String) {
 
         val inputs90 = IValue.from(tensor90)
         val output90 = model.forward(inputs90).toTensor()
-        val scor90 = output90.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
+        val scor90 = output90.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
         val inputs180 = IValue.from(tensor180)
         val output180 = model.forward(inputs180).toTensor()
-        val scror180 = output180.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
+        val scror180 = output180.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
         val inputs270 = IValue.from(tensor270)
         val output270 = model.forward(inputs270).toTensor()
-        val scror270 = output270.dataAsFloatArray.asList().map { (it * 0.8).toFloat() }
+        val scror270 = output270.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
         var scores = scorOrig.zip(scor90).map { (a, b) -> a + b }
         scores = scores.zip(scror180).map { (a, b) -> a + b }
@@ -92,8 +92,8 @@ class Classifier(modelPath: String) {
 
         val classIndex = argMax(finalScores)
         if (!full_info)
-            return Constants.LABELS_LIST[classIndex]
-        return fullArgMax(finalScores)
+            return arrayListOf(Constants.LABELS_LIST[classIndex])
+        return arrayListOf(fullArgMax(finalScores),Constants.LABELS_LIST[classIndex])
 
     }
 

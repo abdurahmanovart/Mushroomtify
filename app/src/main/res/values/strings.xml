@@ -13,13 +13,94 @@
     <string name="share_btn_text">Share</string>
     <string name="disclaimer_title">Disclaimer</string>
     <string name="disclaimer_message">Dont eat mushrooms, when you are not sure, if they are edible. This application only gives information, what mushrooms your pictures are similar to.</string>
-    <string-array name="filters_names">
-        <item>Original</item>
-        <item>Sepia</item>
-        <item>Invert</item>
-        <item>Sharpen</item>
-        <item>RedFilter</item>
-        <item>BlueFilter</item>
-        <item>GreenFilter</item>
+    <string-array name="mushroom_names">
+        <item>Fly agaric</item>
+        <item>Pantherina cap</item>
+        <item>Death cap</item>
+        <item>Fool\'s mushroom</item>
+        <item>Honey fungus</item>
+        <item>Honey fungus</item>
+        <item>King bolete mushroom</item>
+        <item>Cep/Penny bun</item>
+        <item>Pine bolete</item>
+        <item>Pine bolete</item>
+        <item>Satan\'s bolete</item>
+        <item>Chanterelle</item>
+        <item>Mica cap</item>
+        <item>Tinder fungus</item>
+        <item>Red belt conk</item>
+        <item>Funeral bell mushroom</item>
+        <item>Beeswax bracket</item>
+        <item>Sulphur tuft</item>
+        <item>Saffron milk cap</item>
+        <item>False saffron milk cap</item>
+        <item>Boletus melaneus</item>
+        <item>Brown birch bolete</item>
+        <item>Birch bolete</item>
+        <item>Mottled bolete</item>
+        <item>Orange birch bolete</item>
+        <item>Foxy bolete</item>
+        <item>Common bonnet</item>
+        <item>Deer shield/deer mushroom</item>
+        <item>Pale Brittlestem mushroom</item>
+        <item>Grass-green Russula</item>
+        <item>Yellow swamp Russula</item>
+        <item>Bare-toothed Russula</item>
+        <item>Shrimp mushroom</item>
+        <item>Jellied bolete</item>
+        <item>Weeping bolete/granulating bolete</item>
+        <item>Larch bolete mushroom</item>
+        <item>Slippery jack</item>
+        <item>Coriolus versicolor</item>
+        <item>Yellow knight mushroom</item>
+        <item>Red cracking bolete</item>
+    </string-array>
+
+
+
+
+    <string-array name="mushroom_edible">
+        <item>Poisonous</item>
+        <item>Poisonous</item>
+        <item>Poisonous</item>
+        <item>Poisonous</item>
+        <item>Not recommend to take</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Poisonous</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Inedible</item>
+        <item>Inedible</item>
+        <item>Poisonous</item>
+        <item>Inedible</item>
+        <item>Poisonous</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Edible</item>
+        <item>Inedible</item>
+        <item>Edible</item>
+
+
+
     </string-array>
 </resources>

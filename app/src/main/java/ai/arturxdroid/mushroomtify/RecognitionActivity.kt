@@ -4,19 +4,23 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_recognition.*
+import kotlinx.android.synthetic.main.mushroom_item.*
 import kotlinx.coroutines.*
 
 class RecognitionActivity : AppCompatActivity() {
 
     private lateinit var classifier: Classifier
-    val job = Job()
-    val coroutineScope = CoroutineScope(job)
-    val currentRecognizedText: MutableLiveData<String> by lazy {
+    private val job = Job()
+    private val coroutineScope = CoroutineScope(job)
+    private lateinit var dialog:BottomSheetDialog
+    private val currentRecognizedText: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
@@ -38,26 +42,34 @@ class RecognitionActivity : AppCompatActivity() {
         mushroom_recognition_image_view.setImageBitmap(imageBitmap)
         initClassification(imageBitmap)
         val textObserver = Observer<String> { newName ->
-            recognized_name_text_view.text = newName
+//            recognized_name_text_view.text = newName
         }
         currentRecognizedText.observe(this, textObserver)
+        dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.mushroom_item)
+//        dialog.show()
     }
 
     private fun initClassification(imageBitmap: Bitmap) {
-        var text: String
+        var text: List<String>
         progress_bar.show()
         progress_bar.animate()
         coroutineScope.launch {
             text = predict(imageBitmap)
+            delay(4000)
             withContext(Dispatchers.Main) {
                 progress_layout.visibility = View.GONE
                 progress_bar.hide()
-                currentRecognizedText.value = text
+                Log.i("FULL_INFO",text[0])
+                dialog.mushroom_name_text_view.text = text[1]
+                dialog.mushroom_edible_text_view.text = "edible"
+                dialog.mushroom_edible_text_view.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+                dialog.show()
             }
         }
     }
 
-    private fun predict(imageBitmap: Bitmap): String {
+    private fun predict(imageBitmap: Bitmap): List<String> {
         classifier = Classifier(Utils.assetFilePath(this, "bkp.pt"))
         val text =
             classifier.predict(imageBitmap, true) + "\n\n" + classifier.predict(imageBitmap)
