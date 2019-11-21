@@ -2,6 +2,7 @@ package ai.arturxdroid.mushroomtify
 
 import android.graphics.Bitmap
 import android.graphics.Matrix
+import android.util.Log
 import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
@@ -18,51 +19,37 @@ class Classifier(modelPath: String) {
             Bitmap.createScaledBitmap(bitmap, size, size, false), mean, std
         )
 
-    private fun argMax(array: FloatArray): Int {
-        var maxIndex = 0
-        var maxValue = Float.MIN_VALUE
+    private fun argMax(array: FloatArray): ArrayList<Int> {
+        val copy = array.copyOf()
+        copy.sort()
+        val result = ArrayList<Int>(3)
 
-        for (i in array.indices) {
-            if (array[i] > maxValue) {
-                maxIndex = i
-                maxValue = array[i]
-            }
+        for (i in copy.take(3)) {
+            result.add(array.indexOf(i))
         }
-        return maxIndex
+        return result
     }
 
-    private fun fourArgMax(array: FloatArray): String {
+    private fun fullArgMax(array: FloatArray): String {
         val copy = array.copyOf()
-        val sortedCopy = array.copyOf()
-        sortedCopy.sort()
-        val firstFives = sortedCopy.takeLast(5)
-        val firstIndexes = IntArray(5)
         var result = ""
-        for (i in firstFives.indices) {
-            firstIndexes[i] = copy.indexOf(firstFives[i])
-            result += Constants.LABELS_LIST[firstIndexes[i]] + ":" + firstFives[i] + "\n"
+
+        for (i in copy.indices) {
+            result += Constants.LABELS_LIST[i] + ":" + copy[i] + "\n"
         }
 
         return result
     }
 
-    private fun fullArgMax(array: FloatArray):String{
-        val copy = array.copyOf()
-        var result = ""
-        for (i in copy.indices){
-            result+= Constants.LABELS_LIST[i] +":"+copy[i]+"\n"
-        }
-        return result
-
-    }
-
-    fun predict(bitmap: Bitmap, full_info: Boolean = false): ArrayList<String> {
+    fun predict(
+        bitmap: Bitmap,
+        debug: Boolean = false
+    ): ArrayList<Int> {
 
         val bmpOrig = Bitmap.createScaledBitmap(bitmap, 256, 256, false)
         val bmp90 = bmpOrig.rotate(90f)
         val bmp180 = bmpOrig.rotate(180f)
         val bmp270 = bmpOrig.rotate(270f)
-
 
         val tensorOrig = preProcess(bmpOrig, 256)
         val tensor90 = preProcess(bmp90, 256)
@@ -71,29 +58,30 @@ class Classifier(modelPath: String) {
 
         val inputsOrig = IValue.from(tensorOrig)
         val outputOrig = model.forward(inputsOrig).toTensor()
-        val scorOrig = outputOrig.dataAsFloatArray.asList()
+        val scoreOrig = outputOrig.dataAsFloatArray.asList()
 
         val inputs90 = IValue.from(tensor90)
         val output90 = model.forward(inputs90).toTensor()
-        val scor90 = output90.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
+        val score90 = output90.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
         val inputs180 = IValue.from(tensor180)
         val output180 = model.forward(inputs180).toTensor()
-        val scror180 = output180.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
+        val score180 = output180.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
         val inputs270 = IValue.from(tensor270)
         val output270 = model.forward(inputs270).toTensor()
-        val scror270 = output270.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
+        val score270 = output270.dataAsFloatArray.asList().map { (it * 0.9).toFloat() }
 
-        var scores = scorOrig.zip(scor90).map { (a, b) -> a + b }
-        scores = scores.zip(scror180).map { (a, b) -> a + b }
-        scores = scores.zip(scror270).map { (a, b) -> a + b }
-        val finalScores = scores.map { it/4f }.toFloatArray()
+        var scores = scoreOrig.zip(score90).map { (a, b) -> a + b }
+        scores = scores.zip(score180).map { (a, b) -> a + b }
+        scores = scores.zip(score270).map { (a, b) -> a + b }
+        val finalScores = scores.map { it / 4f }.toFloatArray()
 
-        val classIndex = argMax(finalScores)
-        if (!full_info)
-            return arrayListOf(Constants.LABELS_LIST[classIndex])
-        return arrayListOf(fullArgMax(finalScores),Constants.LABELS_LIST[classIndex])
+        val classIndexes = argMax(finalScores)
+        if (debug) {
+            Log.i("", arrayListOf(fullArgMax(finalScores)).toString())
+        }
+        return classIndexes
 
     }
 
