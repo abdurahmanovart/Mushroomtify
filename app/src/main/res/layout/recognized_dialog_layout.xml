@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:text="@string/most_similar_to"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:padding="10dp"
+        android:text="@string/also_looks_like"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

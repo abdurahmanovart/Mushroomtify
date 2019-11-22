@@ -13,7 +13,10 @@
     <string name="share_btn_text">Share</string>
     <string name="disclaimer_title">Disclaimer</string>
     <string name="disclaimer_message">Dont eat mushrooms, when you are not sure, if they are edible. This application only gives information, what mushrooms your pictures are similar to.</string>
-    <string-array name="mushroom_names">
+    <string name="most_similar_to">Most similar to:</string>
+    <string name="also_looks_like">Also looks like:</string>
+    <string name="show_results_button">Show result</string>
+    <string-array name="mushroom_names_array">
         <item>Fly agaric</item>
         <item>Pantherina cap</item>
         <item>Death cap</item>
@@ -59,7 +62,7 @@
 
 
 
-    <string-array name="mushroom_edible">
+    <string-array name="mushroom_edibility_array">
         <item>Poisonous</item>
         <item>Poisonous</item>
         <item>Poisonous</item>
