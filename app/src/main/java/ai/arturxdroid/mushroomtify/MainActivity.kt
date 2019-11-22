@@ -39,11 +39,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDisclaimer() {
         val prefs = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
-        if(prefs.getBoolean(SHARED_FIRST_LAUNCH,true)){
-            prefs.edit().putBoolean(SHARED_FIRST_LAUNCH,false).apply()
+        if (prefs.getBoolean(SHARED_FIRST_LAUNCH, true)) {
+            prefs.edit().putBoolean(SHARED_FIRST_LAUNCH, false).apply()
             AlertDialog.Builder(this).setTitle(R.string.disclaimer_title)
                 .setMessage(R.string.disclaimer_message)
-                .setPositiveButton(R.string.ok
+                .setPositiveButton(
+                    R.string.ok
                 ) { dialog, _ -> dialog?.dismiss() }
                 .setCancelable(false)
                 .show()
