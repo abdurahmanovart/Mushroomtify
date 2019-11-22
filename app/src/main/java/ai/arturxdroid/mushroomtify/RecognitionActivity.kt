@@ -21,9 +21,6 @@ class RecognitionActivity : AppCompatActivity() {
     private val job = Job()
     private val coroutineScope = CoroutineScope(job)
     private lateinit var dialog: BottomSheetDialog
-    private val currentRecognizedText: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +93,7 @@ class RecognitionActivity : AppCompatActivity() {
 
     private fun getMushroomIcon(type: String): Int {
         return when (type.toLowerCase()) {
-            "edible" -> R.drawable.good_mushroom
+            getString(R.string.edible) -> R.drawable.good_mushroom
             else -> R.drawable.bad_mushroom
         }
 
@@ -104,8 +101,8 @@ class RecognitionActivity : AppCompatActivity() {
 
     private fun getEdibilityColor(edibility: String): Int {
         return when (edibility.toLowerCase()) {
-            "edible" -> getColor(android.R.color.holo_green_dark)
-            "inedible" -> getColor(androidx.appcompat.R.color.material_grey_600)
+            getString(R.string.edible) -> getColor(android.R.color.holo_green_dark)
+            getString(R.string.inedible) -> getColor(androidx.appcompat.R.color.material_grey_600)
             else -> getColor(android.R.color.holo_red_dark)
         }
     }

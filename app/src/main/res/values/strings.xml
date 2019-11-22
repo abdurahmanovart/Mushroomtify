@@ -16,6 +16,8 @@
     <string name="most_similar_to">Most similar to:</string>
     <string name="also_looks_like">Also looks like:</string>
     <string name="show_results_button">Show result</string>
+    <string name="edible">edible</string>
+    <string name="inedible">inedible</string>
     <string-array name="mushroom_names_array">
         <item>Fly agaric</item>
         <item>Pantherina cap</item>
