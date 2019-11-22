@@ -6,7 +6,7 @@
     <string name="read_external_permission_name">read external files and camera</string>
     <string name="permission_dialog_message">Application need a permission to work properly. Please provide permission to: </string>
     <string name="permission_dialog_title">Permission needed</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="error">Error</string>
     <string name="error_dialog_message">Something went wrong. Please try again</string>
     <string name="filter_name">Filter name</string>

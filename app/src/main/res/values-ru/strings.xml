@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Грибовед</string>
+    <string name="also_looks_like">Также похоже на:</string>
+    <string name="disclaimer_message">Никогда не едите гриб, в съедобности которого не уверены. Приложение помогает</string>
+    <string name="disclaimer_title">Предупреждение</string>
+    <string name="edible">съедобный</string>
+    <string name="error">Ошибка</string>
+    <string name="error_dialog_message">Ошибка, попробуйте еще раз</string>
+    <string name="filter_name">Название фильтра</string>
+    <string name="inedible">несъедобный</string>
+    <string name="most_similar_to">Скорее всего:</string>
+    <string name="open_gallery_btn_text">Открыть галерею</string>
+    <string name="permission_dialog_message">Приложению нужны разрешения для работы. Пожалуйста, предоставьте разрешения для:</string>
+    <string name="permission_dialog_title">Нужны разрешения</string>
+    <string name="read_external_permission_name">камеры</string>
+    <string name="share_btn_text">поделиться</string>
+    <string name="show_results_button">Результат</string>
+    <string name="take_picture_btn_text">Сделать фото</string>
+    <string name="write_external_permission_name">чтения/записи файлов</string>
+</resources>
