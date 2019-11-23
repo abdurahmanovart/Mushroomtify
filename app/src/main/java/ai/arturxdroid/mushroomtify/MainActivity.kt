@@ -121,7 +121,6 @@ class MainActivity : AppCompatActivity() {
         } catch (ex: IOException) {
             ex.printStackTrace()
         }
-
     }
 
     private fun getPermissionAndOpenGallery() {
@@ -134,7 +133,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             openGallery()
         }
-
     }
 
     private fun openGallery() {
@@ -152,7 +150,6 @@ class MainActivity : AppCompatActivity() {
             requestPermission(
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
             )
-
     }
 
     private fun getCameraPermission() {
@@ -176,7 +173,6 @@ class MainActivity : AppCompatActivity() {
         val requestCode =
             if (permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE) CAMERA_PERMISSION_REQUEST_CODE else READ_PERMISSION_REQUEST_CODE
         requestPermissions(permissions, requestCode)
-
     }
 
     private fun createImageFile(): File {

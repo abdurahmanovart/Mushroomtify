@@ -93,7 +93,6 @@ class RecognitionActivity : AppCompatActivity() {
             getString(R.string.edible) -> R.drawable.good_mushroom
             else -> R.drawable.bad_mushroom
         }
-
     }
 
     private fun getEdibilityColor(edibility: String): Int {
@@ -111,4 +110,3 @@ class RecognitionActivity : AppCompatActivity() {
         return text
     }
 }
-
