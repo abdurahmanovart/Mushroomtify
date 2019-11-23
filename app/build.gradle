@@ -17,7 +17,11 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -44,8 +48,13 @@ dependencies {
     //Lifecycle
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
 
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
     //Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
