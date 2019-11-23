@@ -18,4 +18,89 @@
     <string name="show_results_button">Результат</string>
     <string name="take_picture_btn_text">Сделать фото</string>
     <string name="write_external_permission_name">чтения/записи файлов</string>
+
+    <string-array name="mushroom_names_array">
+        <item>Мухомор красный</item>
+        <item>Мухомор пантерный</item>
+        <item>Бледная поганка</item>
+        <item>Мухомор весенний</item>
+        <item>Опенок толстоногий</item>
+        <item>Опенок осенний</item>
+        <item>Белый гриб березовый</item>
+        <item>Белый гриб</item>
+        <item>Белый гриб сосновый</item>
+        <item>Белый гриб сосновый</item>
+        <item>Сатанинский гриб</item>
+        <item>Лисичка обыкновенная</item>
+        <item>Навозник мерцающий</item>
+        <item>Трутовик настоящий</item>
+        <item>Трутовик окаймлOrённый</item>
+        <item>Галерина окаймлённая</item>
+        <item>Ganoderma pfeifferi</item>
+        <item>Ложноопёнок серно-жёлтый</item>
+        <item>Рыжик настоящий</item>
+        <item>Рыжик еловый</item>
+        <item>Подберёзовик чёрный</item>
+        <item>Подберёзовик обыкновенный</item>
+        <item>Подберёзовик разноцветный</item>
+        <item>Подосиновик жёлто-бурый</item>
+        <item>Красноголовик/подосиновик</item>
+        <item>Мицена колпаковидная</item>
+        <item>Олений гриб</item>
+        <item>Хруплянка</item>
+        <item>Сыроежка зелёная</item>
+        <item>Сыроежка светло-жёлтая</item>
+        <item>Сыроежка пищевая</item>
+        <item>Сыроежка буреющая</item>
+        <item>Маслёнок болотный</item>
+        <item>Маслёнок зернистый</item>
+        <item>Маслёнок лиственничный</item>
+        <item>Маслёнок обыкновенный</item>
+        <item>Трутовик разноцветный</item>
+        <item>Рядовка серебристая</item>
+        <item>Моховик пестрый</item>
+    </string-array>
+
+    <string-array name="mushroom_edibility_array">
+        <item>Ядовитый</item>
+        <item>Ядовитый</item>
+        <item>Ядовитый</item>
+        <item>Ядовитый</item>
+        <item>Не рекомендуется брать</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Ядовитый</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Несъедобный</item>
+        <item>Несъедобный</item>
+        <item>Ядовитый</item>
+        <item>Несъедобный</item>
+        <item>Ядовитый</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Съедобный</item>
+        <item>Несъедобный</item>
+        <item>Съедобный</item>
+
+    </string-array>
 </resources>
