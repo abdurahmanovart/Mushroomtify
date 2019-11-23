@@ -24,7 +24,7 @@ class Classifier(modelPath: String) {
         copy.sort()
         val result = ArrayList<Int>(3)
 
-        for (i in copy.take(3)) {
+        for (i in copy.takeLast(3).reversed()) {
             result.add(array.indexOf(i))
         }
         return result
@@ -79,7 +79,7 @@ class Classifier(modelPath: String) {
 
         val classIndexes = argMax(finalScores)
         if (debug) {
-            Log.i("", arrayListOf(fullArgMax(finalScores)).toString())
+            Log.i("CLASSIFYTAG", arrayListOf(fullArgMax(finalScores)).toString())
         }
         return classIndexes
 
