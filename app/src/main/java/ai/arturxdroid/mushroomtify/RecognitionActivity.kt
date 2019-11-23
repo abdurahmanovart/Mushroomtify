@@ -46,7 +46,6 @@ class RecognitionActivity : AppCompatActivity() {
         progress_bar.animate()
         coroutineScope.launch {
             indexes = predict(imageBitmap)
-            delay(2000)
             withContext(Dispatchers.Main) {
                 progress_bar.hide()
                 progress_layout.visibility = View.INVISIBLE
