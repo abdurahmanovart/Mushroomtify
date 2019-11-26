@@ -31,12 +31,19 @@ class RecognitionActivity : AppCompatActivity() {
         coroutineScope.cancel()
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun initUI() {
         val uriString = intent.extras?.getString(EXTRA_IMAGE_URI)
         val imageBitmap =
             MediaStore.Images.Media.getBitmap(this.contentResolver, Uri.parse(uriString))
         mushroom_recognition_image_view.setImageBitmap(imageBitmap)
         initClassification(imageBitmap)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         dialog = BottomSheetDialog(this)
     }
 
@@ -98,7 +105,7 @@ class RecognitionActivity : AppCompatActivity() {
     private fun getEdibilityColor(edibility: String): Int {
         return when (edibility.toLowerCase()) {
             getString(R.string.edible) -> getColor(android.R.color.holo_green_dark)
-            getString(R.string.inedible) -> getColor(androidx.appcompat.R.color.material_grey_600)
+            getString(R.string.inedible) -> getColor(android.R.color.darker_gray)
             else -> getColor(android.R.color.holo_red_dark)
         }
     }
