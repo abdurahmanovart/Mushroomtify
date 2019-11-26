@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.IOException
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
                 .setCancelable(false)
                 .show()
         }
-
     }
 
     override fun onRequestPermissionsResult(
@@ -61,6 +61,16 @@ class MainActivity : AppCompatActivity() {
             openGallery()
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             takePicture()
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED)
+            showPermissionErrorToast()
+    }
+
+    private fun showPermissionErrorToast() {
+        Snackbar.make(
+            constraint_layout,
+            R.string.permission_error_snackbar_message,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -70,8 +80,9 @@ class MainActivity : AppCompatActivity() {
                 CAMERA_IMAGE_REQUEST_CODE -> processCameraImage()
                 GALLERY_IMAGE_REQUEST_CODE -> processGalleryImage(data)
             }
-        else
-            showErrorDialog()
+        else {
+            //showErrorDialog()
+        }
     }
 
     private fun processCameraImage() {
@@ -197,15 +208,15 @@ class MainActivity : AppCompatActivity() {
     private fun showRequestExplanationDialog(permissions: Array<String>) {
 
         val permissionName = when (permissions[0]) {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE -> getString(R.string.write_external_permission_name)
-            else -> getString(R.string.read_external_permission_name)
+            Manifest.permission.WRITE_EXTERNAL_STORAGE -> getString(R.string.read_external_permission_name)
+            else -> getString(R.string.write_external_permission_name)
         }
 
         val dialogMessage = getString(R.string.permission_dialog_message)
 
         AlertDialog.Builder(this)
             .setTitle(R.string.permission_dialog_title)
-            .setMessage(dialogMessage + permissionName)
+            .setMessage("$dialogMessage $permissionName")
             .setNeutralButton(
                 R.string.ok
             ) { dialog, _ ->
