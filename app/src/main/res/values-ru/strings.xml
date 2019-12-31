@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Грибовед</string>
     <string name="also_looks_like">Также похоже на:</string>
-    <string name="disclaimer_message">Никогда не едите гриб, в съедобности которого не уверены. Приложение только помогает в определении вида грибов</string>
+    <string name="disclaimer_message">Никогда не ешьте гриб, в съедобности которого не уверены. Приложение только помогает в определении вида грибов</string>
     <string name="disclaimer_title">Предупреждение</string>
     <string name="edible">съедобный</string>
     <string name="error">Ошибка</string>

@@ -111,7 +111,7 @@ class RecognitionActivity : AppCompatActivity() {
     }
 
     private fun predict(imageBitmap: Bitmap): List<Int> {
-        classifier = Classifier(Utils.assetFilePath(this, "bkp.pt"))
+        classifier = Classifier(Utils.assetFilePath(this, "512.pt"))
         val text =
             classifier.predict(imageBitmap, false)
         return text

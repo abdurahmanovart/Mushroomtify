@@ -13,6 +13,7 @@ class Classifier(modelPath: String) {
     var model = Module.load(modelPath)
     val mean = floatArrayOf(0.485f, 0.456f, 0.406f)
     val std = floatArrayOf(0.229f, 0.224f, 0.225f)
+    val size = 512
 
     private fun preProcess(bitmap: Bitmap, size: Int): Tensor =
         TensorImageUtils.bitmapToFloat32Tensor(
@@ -46,15 +47,15 @@ class Classifier(modelPath: String) {
         debug: Boolean = false
     ): ArrayList<Int> {
 
-        val bmpOrig = Bitmap.createScaledBitmap(bitmap, 256, 256, false)
+        val bmpOrig = Bitmap.createScaledBitmap(bitmap, size, size, false)
         val bmp90 = bmpOrig.rotate(90f)
         val bmp180 = bmpOrig.rotate(180f)
         val bmp270 = bmpOrig.rotate(270f)
 
-        val tensorOrig = preProcess(bmpOrig, 256)
-        val tensor90 = preProcess(bmp90, 256)
-        val tensor180 = preProcess(bmp180, 256)
-        val tensor270 = preProcess(bmp270, 256)
+        val tensorOrig = preProcess(bmpOrig, size)
+        val tensor90 = preProcess(bmp90, size)
+        val tensor180 = preProcess(bmp180, size)
+        val tensor270 = preProcess(bmp270, size)
 
         val inputsOrig = IValue.from(tensorOrig)
         val outputOrig = model.forward(inputsOrig).toTensor()
